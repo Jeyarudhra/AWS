@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+
+    <div id="main">
+        <div class="sidebar">
+            <div class="hover" style=" padding:13px; border-radius: 10px;">
+                <div class="touch"><a href="#" class="active"><i class="material-icons"
+                            style="margin-left: 4px;">home</i></a></div>
+                <a href="#">Home</a>
+            </div>
+            <div class="hover" style="padding: 9px 5px;border-radius: 10px;margin-top: 5px;">
+                <div style="margin-top: 10px; "><a href="#"><i class="material-icons"
+                            style="margin-left: 12px;">date_range</i></a></div>
+                <a href="#">Calendar</a>
+            </div>
+            <div class="hover" style=" padding:9px 8px; border-radius: 10px;margin-top: 5px;" id="settings-button">
+                <div style="margin-top: 10px; "><a href="#"><i class="material-icons"
+                            style="margin-left: 10px;">settings</i></a></div>
+                <a href="#">Settings</a>
+            </div>
+            <div class="container"
+                style="width: 80px;height: 115px;padding: 10px 7px 10px 7px;gap: 10px;border-radius: 10px; margin-top:40px;">
+                <img src="static/ukclock.png" alt="ukclock" style="margin-left: 11px;">
+                <p
+                    style="font-family: IBM Plex Sans;font-size: 14px;font-weight: 400;text-align: center;color: #ffffff; margin-top:-20px; margin-left:-8px;">
+                    UK (BST)</p>
+                <div id="uk-time"
+                    style="font-family: IBM Plex Sans;color: #ffffff;font-size: 20px;text-align: center; margin-left:-8px;">
+                    <p style="margin-top: -20px;">--:--</p>
+                    <p style="margin-top: -29px;">--</p>
+                </div>
+            </div>
+            <div class="container"
+                style="width: 80px;height: 115px;padding: 10px 7px 10px 7px;gap: 10px;border-radius: 10px;margin-top: 5px;">
+                <img src="static/indiaclock.png" alt="indiaclock" style="margin-left: 11px;">
+                <p
+                    style="font-family: IBM Plex Sans;font-size: 14px;font-weight: 400;text-align: center;color: #ffffff; margin-top:-20px; margin-left:-8px;">
+                    India (IST)</p>
+                <div id="india-time"
+                    style="font-family: IBM Plex Sans;color: #ffffff;font-size: 20px;text-align: center; margin-left:-8px;">
+                    <p style="margin-top: -20px;">--:--</p>
+                    <p style="margin-top: -29px;">--</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-overlay" id="settingsModal">
+            <div class="modal-box settings-modal">
+                <h3>Settings</h3>
+                <div class="tabs">
+                    <a href="#" class="tablink active" onclick="openTab(event, 'ThemeTab')">Theme</a>
+                    <a href="#" class="tablink" onclick="openTab(event, 'PasswordTab')">Password</a>
+                </div>
+                <hr>
+                <div id="ThemeTab" class="tabcontent">
+                    <div class="card"
+                        style="display:flex; z-index: 10; justify-content: space-between; box-shadow:0px 2px 10px rgba(0,0,0,0.24); border-radius:17px;">
+                        <p style="margin-left: 35px;">Dark mode</p>
+                        <label class="switch">
+                            <input type="checkbox" id="darkModeToggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <div class="card"
+                        style="display:flex; z-index: 10; justify-content: space-between; box-shadow:0px 2px 10px rgba(0,0,0,0.24); margin-top:10px; border-radius:17px;">
+                        <p style="margin-left: 35px;">Light mode</p>
+                        <label class="switch">
+                            <input type="checkbox" id="lightModeToggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div id="PasswordTab" class="tabcontent" style="display:none;">
+                    <p>Change your password here.</p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+
+            <div class="header">
+                <div class="logo">
+                    <img src="static/sandhatalogo.png" alt="Sandhata" style="margin-left: 26px;">
+                </div>
+                <div class="search-bar">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <form id="search-form" action="/search" method="POST">
+                        <input type="text" id="cn_name" name="cn_name" autocomplete="off"
+                            placeholder="Search for user...">
+                        <ul id="suggestions" style="color: black;background-color: white;"></ul>
+                    </form>
+                </div>
+                <!-- <div class="center-container">
+                    <div id="modal-overlay1" class="modal-overlay1">
+                        <div class="modal-content1">
+                            <div id="modal-details" class="modal-details">
+                                {% if user_info %}
+                                <div class="manager-box">
+                                    <img src="data:image/png;base64,{{ manager_photo }}" alt="Manager Photo"
+                                        class="profile-picture">
+                                    <div class="details">
+                                        <p class="name">{{ manager_info.cn }}</p>
+                                        <p class="position">{{ manager_info.title }} • {{ manager_info.company }}</p>
+                                        <div class="tooltip">
+                                            <p>Email: {{ manager_info.mail }}</p>
+                                            <p>Phone Number: {{ manager_info.telephoneNumber }}</p>
+                                            <p>Description: {{ manager_info.description }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="user-box">
+                                    <img src="data:image/png;base64,{{ user_photo }}" alt="User Photo"
+                                        class="profile-picture">
+                                    <div class="details">
+                                        <p class="name">{{ user_info.cn }}</p>
+                                        <p class="position">{{ user_info.title }} • {{ user_info.company }}</p>
+                                        <div class="tooltip">
+                                            <p>Email: {{ user_info.mail }}</p>
+                                            <p>Phone Number: {{ user_info.telephoneNumber }}</p>
+                                            <p>Description: {{ user_info.description }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="direct-reports" class="direct-reports">
+                                    {% if direct_reports %}
+                                    <h4>People reporting to {{ user_info.cn }} ({{ direct_reports|length }})</h4>
+                                    <div class="direct-reports-grid">
+                                        {% for report in direct_reports %}
+                                        <div class="report-box">
+                                            <img src="data:image/png;base64,{{ report.photo }}" alt="Report Photo"
+                                                class="profile-picture">
+                                            <div class="details">
+                                                <p class="name">{{ report.cn }}</p>
+                                                <p class="position">{{ report.title }}</p>
+                                                <div class="tooltip">
+                                                    <p>Email: {{ report.mail }}</p>
+                                                    <p>Phone Number: {{ report.telephoneNumber }}</p>
+                                                    <p>Description: {{ report.description }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="center-container">
+                    <div id="modal-overlay1" class="modal-overlay1">
+                        <div class="modal-content1">
+                            <div id="modal-details" class="modal-details">
+                                {% if user_info %}
+                                    <div class="manager-box">
+                                        <img src="data:image/png;base64,{{ manager_photo }}" alt="Manager Photo" class="profile-picture">
+                                        <div class="details">
+                                            <p class="name">{{ manager_info.cn }}
+                                                <span class="tooltip">
+                                                    <p>Email: {{ manager_info.mail }}</p>
+                                                    <p>Phone Number: {{ manager_info.telephoneNumber }}</p>
+                                                    <p>Description: {{ manager_info.description }}</p>
+                                                </span>
+                                            </p>
+                                            <p class="position">{{ manager_info.title }} • {{ manager_info.company }}</p>
+                                        </div>
+                                    </div>
+                
+                                    <div class="user-box">
+                                        <img src="data:image/png;base64,{{ user_photo }}" alt="User Photo" class="profile-picture">
+                                        <div class="details">
+                                            <p class="name">{{ user_info.cn }}
+                                                <span class="tooltip">
+                                                    <p>Email: {{ user_info.mail }}</p>
+                                                    <p>Phone Number: {{ user_info.telephoneNumber }}</p>
+                                                    <p>Description: {{ user_info.description }}</p>
+                                                </span>
+                                            </p>
+                                            <p class="position">{{ user_info.title }} • {{ user_info.company }}</p>
+                                        </div>
+                                    </div>
+                
+                                    <div id="direct-reports" class="direct-reports">
+                                        {% if direct_reports %}
+                                        <h4 >People reporting to {{ user_info.cn }} ({{ direct_reports|length }})</h4>
+                                        <div class="direct-reports-grid">
+                                            {% for report in direct_reports %}
+                                            <div class="report-box">
+                                                <img src="data:image/png;base64,{{ report.photo }}" alt="Report Photo" class="profile-picture">
+                                                <div class="details">
+                                                    <p class="name">{{ report.cn }}
+                                                        <span class="tooltip">
+                                                            <p>Email: {{ report.mail }}</p>
+                                                            <p>Phone Number: {{ report.telephoneNumber }}</p>
+                                                            <p>Description: {{ report.description }}</p>
+                                                        </span>
+                                                    </p>
+                                                    <p class="position">{{ report.title }}</p>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                
+
+                <div class="header-right" style="margin-left: 83px;margin-top: -8px;font-size: 17px;font-weight: 551;">
+                    <a href="#">About us</a>
+                    <a href="#">News</a>
+                    <a href="#">Blogs</a>
+                    <a href="#">Help</a>
+                </div>
+            </div>
+
+            <div class="profile-section">
+                <img src="static/user.png" alt="User" style="width:87px;" height="87px">
+                <div>
+                    <h2 style="margin-top: 37px;">Good Morning, <span style="color: #28aae1;"> {{ cn }}! </span></h2>
+                    <p>25th Sep 2024</p>
+                </div>
+            </div>
+
+            <div class="app-grid" style="width: 1200px; height:400px;">
+                <div class="app-item ceipal">
+                    <a href="https://www.ceipal.com/" target="_blank">
+                        <img src="static/ceipal.png" alt="Ceipal" style="width:110px ; height: 95px;">
+                    </a>
+                    <p>Ceipal</p>
+                </div>
+                <div class="app-item manavata">
+                    <a href="https://www.manavata.org/" target="_blank">
+                        <img src="static/manavata.png" alt="CSR" style="width:60px; height: 93px;">
+                    </a>
+                    <p>CSR</p>
+                </div>
+                <div class="app-item gini">
+                    <a href="http://gini.sandhata.com/" target="_blank">
+                        <img src="static/gini.png" alt="Gini">
+                    </a>
+                    <p>Gini</p>
+                </div>
+                <div class="app-item gurukul">
+                    <a href="https://www.gurukul.org/" target="_blank">
+                        <img src="static/gurukul.png" alt="Gurukul" style="width:150px ; height:80px">
+                    </a>
+                    <p style="margin-top:8px;">Gurukul</p>
+                </div>
+                <div class="app-item onenote">
+                    <a href="https://www.onenote.com/" target="_blank">
+                        <img src="static/onenote.png" alt="One Note" style="width:110px; height:100px;">
+                    </a>
+                    <p style="margin-top:-11px;">One Note</p>
+                </div>
+                <div class="app-item outlook">
+                    <a href="https://www.outlook.com/" target="_blank">
+                        <img src="static/outlook.png" alt="Outlook" style="width:70px; height:80px;">
+                    </a>
+                    <p style="margin-top:8px;">Outlook</p>
+                </div>
+                <div class="app-item saAt">
+                    <a href="https://apps.powerapps.com/play/e/default-5e45e2ef-d6aa-4ad1-aaca-a7187394a753/a/c03894d5-591f-4634-82ae-9b1c02a4a9cb?tenantId=5e45e2ef-d6aa-4ad1-aaca-a7187394a753&hint=8ebbc456-f640-4e3d-a2a4-4e595524d431&sourcetime=1716881580795"
+                        target="_blank">
+                        <img src="static/saAt.png" alt="SaAT" style="width:70px; height:80px;">
+                    </a>
+                    <p>SaAT</p>
+                </div>
+                <div class="app-item sharepoint">
+                    <a href="https://www.sharepoint.com/" target="_blank">
+                        <img src="static/sharepoint.png" alt="SharePoint" style="width:70px; height:80px; ">
+                    </a>
+                    <p style="margin-left:-30px;">Share Point</p>
+                </div>
+                <div class="app-item teams">
+                    <a href="https://www.teams.com/" target="_blank">
+                        <img src="static/teams.png" alt="Teams" style="width:70px; height:80px;">
+                    </a>
+                    <p>Teams</p>
+                </div>
+                <div class="app-item zoho">
+                    <a href="https://www.zoho.com/people/login.html" target="_blank">
+                        <img src="static/zoho.png" alt="Zoho" style="width:70px; height:80px;">
+                    </a>
+                    <p>Zoho</p>
+                </div>
+            </div>
+            <section class="announcements-container" style="margin-left:40px; margin-top: 30px;">
+                <h2>Announcements</h2>
+                <div class="tabs">
+                    <a href="#" class="tablink" onclick="openTab(event, 'AllAnnouncements')" id="defaultOpen">All
+                        announcements</a>
+                    <a href="#" class="tablink" onclick="openTab(event, 'MyAnnouncements')">My announcements</a>
+                </div>
+                <hr>
+                <div class="tabs-content">
+                    <div id="AllAnnouncements" class="tabcontent">
+                        <div class="announcement" style="margin-left:-20px; margin-top:-20px">
+
+                            <div class="announcement-content">
+                                <div class="policies" style="font-family: bold;">
+                                    <h5>Sandhata HR Policies</h5>
+                                </div>
+                                <p>No two days are the same in the life of a sales rep. You’re often dealing with a
+                                    variety of clients that want different things, have different budgets and have
+                                    different reservations. It’s a lot to handle. To make the sales process easier to
+                                    manage, create a sales playbook. A sales playbook is a go-to guide for all your best
+                                    practices, processes, and procedures. It empowers salespeople to engage customers at
+                                    every touchpoint and adapt to any selling situation.</p>
+
+                                <div class="posted-by">
+                                    <img src="static/user.png" alt="User" class="user-icon">
+                                    <span>Selina Leone posted an announcement on HR behaviour</span>
+                                    <span class="posted-time">8 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="MyAnnouncements" class="tabcontent">
+                    </div>
+                </div>
+            </section>
+            <div id="MyAnnouncements" class="tabcontent">
+            </div>
+            </section>
+        </div>
+    </div>
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablink;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablink = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablink.length; i++) {
+                tablink[i].className = tablink[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        document.getElementById("defaultOpen").click();
+    </script>
+    <script>
+        var modal = document.getElementById("settingsModal");
+        var settingsButton = document.getElementById("settings-button");
+        var closeModalButton = document.getElementById("closeModal");
+
+        settingsButton.onclick = function () {
+            modal.style.display = "block";
+        };
+        window.onclick = function (event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablink;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablink = document.getElementsByClassName("tablink");
+            for (i = 0; i < tablink.length; i++) {
+                tablink[i].className = tablink[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+    <script>
+        var darkModeToggle = document.getElementById('darkModeToggle');
+        var lightModeToggle = document.getElementById('lightModeToggle');
+        darkModeToggle.addEventListener('change', function () {
+            if (darkModeToggle.checked) {
+                lightModeToggle.checked = false;
+                document.body.classList.add('dark-mode');
+                document.body.classList.remove('light-mode');
+            }
+        });
+        lightModeToggle.addEventListener('change', function () {
+            if (lightModeToggle.checked) {
+                darkModeToggle.checked = false;
+                document.body.classList.add('light-mode');
+                document.body.classList.remove('dark-mode');
+            }
+        });
+        document.body.classList.add('light-mode');
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#cn_name").keyup(function () {
+                let searchTerm = $(this).val();
+                if (searchTerm.length > 0) {
+                    $.ajax({
+                        url: "/live_search",
+                        method: "GET",
+                        data: { term: searchTerm },
+                        success: function (data) {
+                            let suggestions = data.suggestions;
+                            let suggestionList = $("#suggestions");
+                            suggestionList.empty();
+                            suggestions.forEach(function (suggestion) {
+                                suggestionList.append(`<li>${suggestion}</li>`);
+                            });
+                        },
+                        error: function () {
+                            console.log("Error in live search");
+                        }
+                    });
+                } else {
+                    $("#suggestions").empty();
+                }
+            });
+            $(document).on('click', '#suggestions li', function () {
+                let selectedUser = $(this).text();
+                $('#cn_name').val(selectedUser);
+                $('#suggestions').empty();
+                $.ajax({
+                    url: "/fetch_user_details",
+                    method: "GET",
+                    data: { user: selectedUser },
+                    success: function (data) {
+                        if (data.error) {
+                            alert(data.error);
+                            return;
+                        }
+                        let modalDetails = $("#modal-details");
+                        modalDetails.empty();
+
+                        if (data.user_info) {
+                            modalDetails.append(`
+        <div class="user-box">
+            <img src="data:image/png;base64,${data.user_photo}" alt="User Photo" class="profile-picture">
+            <p class="name"><strong>${data.user_info.cn}</strong>
+                <div class="tooltip">
+                    <p>Email: ${data.user_info.mail}</p>
+                    <p>Phone Number: ${data.user_info.telephoneNumber}</p>
+                    <p>Description: ${data.user_info.description}</p>
+                </div>
+            </p>
+        </div>
+    `);
+                        }
+
+                        // if (data.user_info) {
+                        //     modalDetails.append(`
+                        //         <div class="user-box">
+                        //             <img src="data:image/png;base64,${data.user_photo}" alt="User Photo" class="profile-picture">
+                        //             <p><strong>${data.user_info.cn}</strong></p>
+                        //             <p>Email: ${data.user_info.mail}</p>
+                        //             <p>Phone Number: ${data.user_info.telephoneNumber}</p>
+                        //             <p>Description: ${data.user_info.description}</p>
+                        //         </div>
+                        //     `);
+                        // }
+                        // if (data.manager_info) {
+                        //     modalDetails.append(`
+                        //     <div class="manager-box">
+                        //         <img src="data:image/png;base64,${data.manager_photo}" alt="Manager Photo" class="profile-picture">
+                        //         <p><strong>${data.manager_info.cn}</strong></p>
+                        //         <p>Email: ${data.manager_info.mail}</p>
+                        //         <p>Phone Number: ${data.manager_info.telephoneNumber}</p>
+                        //         <p>Description: ${data.manager_info.description}</p>
+                        //     </div>
+                        // `);
+                        // }
+                        // 
+                        if (data.manager_info) {
+                    modalDetails.append(`
+                        <div class="manager-box">
+                            <img src="data:image/png;base64,${data.manager_photo}" alt="Manager Photo" class="profile-picture">
+                            <p class="name"><strong>${data.manager_info.cn}</strong>
+                                <div class="tooltip">
+                                    <p>Email: ${data.manager_info.mail}</p>
+                                    <p>Phone Number: ${data.manager_info.telephoneNumber}</p>
+                                    <p>Description: ${data.manager_info.description}</p>
+                                </div>
+                            </p>
+                        </div>
+                    `);
+                }
+                        if (data.direct_reports && data.direct_reports.length > 0) {
+    let directReportsHTML = `<div class="direct-reports-grid">`;
+    data.direct_reports.forEach(report => {
+        directReportsHTML += `
+            <div class="report-box">
+                <p class="name">${report.cn}
+                    <div class="tooltip">
+                        <p>Email: ${report.mail}</p>
+                        <p>Phone Number: ${report.telephoneNumber}</p>
+                        <p>Description: ${report.description}</p>
+                    </div>
+                </p>
+            </div>
+        `;
+    });
+    directReportsHTML += `</div>`;
+    modalDetails.append(`
+        <div id="direct-reports" class="direct-reports">
+            <h4 style="font-size: x-large;
+    margin-left: 20px;
+    font-family: aptos;">Direct Reports</h4>
+            ${directReportsHTML}
+        </div>
+    `);
+}
+
+                        $("#modal-overlay1").fadeIn();
+                    },
+                    error: function () {
+                        console.log("Error fetching user details");
+                    }
+                });
+            });
+            $(".modal-close, #closeModal").click(function () {
+                $("#modal-overlay1, #settingsModal").fadeOut();
+            });
+            $(window).click(function (event) {
+                if ($(event.target).is("#modal-overlay1, #settingsModal")) {
+                    $("#modal-overlay1, #settingsModal").fadeOut();
+                }
+            });
+        });
+    </script>
+    <script>
+        function updateTime() {
+            const ukTimeElement = document.getElementById('uk-time');
+            const ukTime = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London', hour12: true, hour: '2-digit', minute: '2-digit' }).split(' ');
+            ukTimeElement.children[0].textContent = ukTime[0];
+            ukTimeElement.children[1].textContent = ukTime[1].toUpperCase();
+
+            const indiaTimeElement = document.getElementById('india-time');
+            const indiaTime = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', hour12: true, hour: '2-digit', minute: '2-digit' }).split(' ');
+            indiaTimeElement.children[0].textContent = indiaTime[0];
+            indiaTimeElement.children[1].textContent = indiaTime[1].toUpperCase();
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();
+    </script>
+    <script>
+        document.getElementById('scroll-down-button').addEventListener('click', function () {
+            const modalDetails = document.getElementById('modal-details');
+            modalDetails.scrollBy({
+                top: 100, // Adjust this value to control the scroll amount
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+
+</html>
